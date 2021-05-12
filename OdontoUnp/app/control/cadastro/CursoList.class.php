@@ -5,8 +5,8 @@
  * @version    1.0
  * @package    control
  * @subpackage cadastro
- * @author     Bruno Reis
- * @copyright  Copyright (c) 2021
+ * @author     Hidel
+ * @copyright  Copyright (c) 2021 e-code
  * @license    http://www.adianti.com.br/framework-license
  */
 class CursoList extends TStandardList
@@ -54,9 +54,9 @@ class CursoList extends TStandardList
         $this->form->setData( TSession::getValue('Curso_filter_data') );
         
         // add the search form actions
-        $btn = $this->form->addAction('Procurar', new TAction(array($this, 'onSearch')), 'fa:search');
+        $btn = $this->form->addAction(_t('Find'), new TAction(array($this, 'onSearch')), 'fa:search');
         $btn->class = 'btn btn-sm btn-primary';
-        $this->form->addAction('Novo',  new TAction(array('CursoForm', 'onEdit')), 'fa:plus green');
+        $this->form->addAction(_t('New'),  new TAction(array('CursoForm', 'onEdit')), 'fa:plus green');
         
         // creates a DataGrid
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
@@ -68,6 +68,7 @@ class CursoList extends TStandardList
         $column_id = new TDataGridColumn('id', 'Id', 'center', 50);
         $column_name = new TDataGridColumn('nome', 'Nome Curso', 'left');
         $column_sigla = new TDataGridColumn('sigla', 'Sigla Curso', 'left');
+
 
         // add the columns to the DataGrid
         $this->datagrid->addColumn($column_id);
@@ -91,7 +92,7 @@ class CursoList extends TStandardList
         // create EDIT action
         $action_edit = new TDataGridAction(array('CursoForm', 'onEdit'));
         $action_edit->setButtonClass('btn btn-default');
-        $action_edit->setLabel('Editar');
+        $action_edit->setLabel(_t('Edit'));
         $action_edit->setImage('far:edit blue');
         $action_edit->setField('id');
         $this->datagrid->addAction($action_edit);
@@ -99,7 +100,7 @@ class CursoList extends TStandardList
         // create DELETE action
         $action_del = new TDataGridAction(array($this, 'onDelete'));
         $action_del->setButtonClass('btn btn-default');
-        $action_del->setLabel('Apagar');
+        $action_del->setLabel(_t('Delete'));
         $action_del->setImage('far:trash-alt red');
         $action_del->setField('id');
         $this->datagrid->addAction($action_del);
