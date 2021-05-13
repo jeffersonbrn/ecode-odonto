@@ -1,6 +1,6 @@
 <?php
 /**
- * Curso
+ * Aluno
  *
  * @version    1.0
  * @package    model
@@ -9,9 +9,9 @@
  * @copyright  Copyright (c) 2021
  * @license    http://www.adianti.com.br/framework-license
  */
-class Curso extends TRecord
+class Aluno extends TRecord
 {
-    const TABLENAME = 'curso';
+    const TABLENAME = 'aluno';
     const PRIMARYKEY= 'id';
     const IDPOLICY =  'serial'; // {max, serial}
     
@@ -22,7 +22,17 @@ class Curso extends TRecord
     public function __construct($id = NULL, $callObjectLoad = TRUE)
     {
         parent::__construct($id, $callObjectLoad);
-        parent::addAttribute('nome');
-        parent::addAttribute('sigla');
+        parent::addAttribute('nomealuno');
+        parent::addAttribute('matricula_id');
+        parent::addAttribute('escaninho');
+        parent::addAttribute('curso_id');
+    }
+
+    /**
+     * Returns the curso
+     */
+    public function get_curso()
+    {
+        return Curso::find($this->curso_id);
     }
 }
