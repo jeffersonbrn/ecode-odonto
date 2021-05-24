@@ -11,6 +11,10 @@
         <action>AlunoList</action>
         <icon>fas:user fa-fw</icon>
       </menuitem>
+      <menuitem label="Instrumento">
+        <action>InstrumentoList</action>
+        <icon>fas:box fa-fw</icon>
+      </menuitem>
     </menu>
   </menuitem>
   <menuitem label="_t{Administration}">
