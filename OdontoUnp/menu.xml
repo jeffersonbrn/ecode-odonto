@@ -17,6 +17,15 @@
       </menuitem>
     </menu>
   </menuitem>
+  <menuitem label="Movimentação">
+    <icon>fas:walking fa-fw</icon>
+    <menu>
+      <menuitem label="Receber Material">
+        <action>ReceberMaterialForm</action>
+        <icon>fas:inbox fa-fw</icon>
+      </menuitem>
+    </menu>
+  </menuitem>
   <menuitem label="_t{Administration}">
     <icon>fas:home fa-fw</icon>
     <menu>
