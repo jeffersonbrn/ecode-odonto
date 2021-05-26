@@ -11,9 +11,7 @@
 class ReceberMaterialForm extends TPage
 {
     protected $form; // form
-    protected $dt_venda;
     protected $instrumento_list;
-    protected $detail_row;
     
     /**
      * Class constructor
@@ -36,12 +34,12 @@ class ReceberMaterialForm extends TPage
         
         $id->setSize(40);
         $id->setEditable(false);
-        $observacao->setSize('100%',50);
         $aluno_id->setSize(50);
-        $escaninho->setSize(50);
-        $nome_aluno->setEditable(false);
         $nome_aluno->setSize('calc(100% - 200px)');
-        
+        $nome_aluno->setEditable(false);
+        $escaninho->setSize(50);
+        $observacao->setSize('100%',50);
+                
         $escaninho->addValidation('Escaninho', new TRequiredValidator);
         $aluno_id->addValidation('Aluno', new TRequiredValidator);
         
@@ -51,7 +49,7 @@ class ReceberMaterialForm extends TPage
         $this->form->addFields( [new TLabel('ID')], [$id] );
         $this->form->addFields( [$label_aluno], [$aluno_id, $nome_aluno] );
         $this->form->addFields( [$label_escaninho], [$escaninho] );
-        $this->form->addFields( [new TLabel('Observacao')], [$observacao] );
+        $this->form->addFields( [new TLabel('Observação')], [$observacao] );
         
         $label_escaninho->setFontColor('#FF0000');
         $label_aluno->setFontColor('#FF0000');
@@ -60,7 +58,7 @@ class ReceberMaterialForm extends TPage
         $instrumento_id = new TDBUniqueSearch('instrumento_id[]', 'database', 'Instrumento', 'id', 'nome');
         $instrumento_id->setMinLength(0);
         $instrumento_id->setSize('100%');
-        $instrumento_id->setMask('{nome} ({id})');
+        $instrumento_id->setMask('({id}) {nome}');
         // $instrumento_id->setChangeAction(new TAction(array($this, 'onChangeProduct')));
         
         $observacao_item = new TEntry('observacao_item[]');
@@ -76,7 +74,7 @@ class ReceberMaterialForm extends TPage
         $this->instrumento_list-> width = '100%';
         $this->instrumento_list->enableSorting();
         
-        $this->form->addFields( [new TFormSeparator('Instrumentos') ] );
+        $this->form->addFields( [new TFormSeparator('Seleção de Instrumentos') ] );
         $this->form->addFields( [$this->instrumento_list] );
         $this->form->addFields( [$this->observacao_item] );
         
@@ -164,7 +162,7 @@ class ReceberMaterialForm extends TPage
             $movimentacao->funcionario_entrada_id = TSession::getValue('userid');
             $movimentacao->store();
             
-            $movimentacao_items = ItemMovimentacao::where('movimentacao_id', '=', $movimentacao->id)->delete();
+            $movimentacao_items = ItemMovimentacao::where('instrumento_id', '=', $instrumento->id)->delete();
             
             if( !empty($param['instrumento_id']) AND is_array($param['instrumento_id']) )
             {
