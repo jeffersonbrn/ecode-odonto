@@ -15,6 +15,8 @@ class ItemMovimentacao extends TRecord
     const PRIMARYKEY= 'id';
     const IDPOLICY =  'serial'; // {max, serial}
     
+    private $movimentacao;
+    private $instrumento;
     
     /**
      * Constructor method
@@ -25,5 +27,29 @@ class ItemMovimentacao extends TRecord
         parent::addAttribute('movimentacao_id');
         parent::addAttribute('instrumento_id');
         parent::addAttribute('observacao');
+    }
+
+    public function set_movimentacao(movimentacao $object) {
+       $this->movimentacao = $object;
+       $this->movimentacao_id = $object->id;
+    }
+
+    public function get_movimentacao() {
+        if (empty($this->movimentacao)){
+            $this->movimentacao = new movimentacao($this->movimentacao_id);
+            return $this->movimentacao;
+        }
+    }
+
+    public function set_instrumento(instrumento $object) {
+        $this->instrumento = $object;
+        $this->instrumento_id = $object->id;
+     }
+
+     public function get_instrumento() {
+        if (empty($this->instrumento)){
+            $this->instrumentoo = new movimentacao($this->instrumento_id);
+            return $this->instrumento;
+        }
     }
 }

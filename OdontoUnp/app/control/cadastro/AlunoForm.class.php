@@ -36,7 +36,7 @@ class AlunoForm extends TPage
         
         // add the form fields
         $this->form->addFields( [new TLabel('ID')],    [$id] );
-        $this->form->addFields( [new TLabel('nome Aluno', 'red')],  [$nomealuno] );
+        $this->form->addFields( [new TLabel('Nome Aluno', 'red')],  [$nomealuno] );
         $this->form->addFields( [new TLabel('Matricula', 'red')],  [$matricula_id] );
         $this->form->addFields( [new TLabel('Curso', 'red')],  [$curso_id] ); 
         $this->form->addFields( [new TLabel('Escaninho')], [$escaninho] );

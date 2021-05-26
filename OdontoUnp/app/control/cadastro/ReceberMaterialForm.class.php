@@ -58,21 +58,27 @@ class ReceberMaterialForm extends TPage
 
         // create detail fields
         $instrumento_id = new TDBUniqueSearch('instrumento_id[]', 'database', 'Instrumento', 'id', 'nome');
-        $instrumento_id->setMinLength(1);
+        $instrumento_id->setMinLength(0);
         $instrumento_id->setSize('100%');
         $instrumento_id->setMask('{nome} ({id})');
         // $instrumento_id->setChangeAction(new TAction(array($this, 'onChangeProduct')));
         
+        $observacao_item = new TEntry('observacao_item[]');
+        $observacao_item->style = 'text-align: right';
+
         $this->form->addField($instrumento_id);
+        $this->form->addField($observacao_item);
         
         // detail
         $this->instrumento_list = new TFieldList;
-        $this->instrumento_list->addField( '<b>Instrumento</b>', $instrumento_id,     ['width' => '90%']);
+        $this->instrumento_list->addField( '<b>Instrumento</b>', $instrumento_id,     ['width' => '50%']);
+        $this->instrumento_list->addField( '<b>Observação</b>', $observacao_item,     ['width' => '50%']);
         $this->instrumento_list-> width = '100%';
         $this->instrumento_list->enableSorting();
         
-        $this->form->addFields( [new TFormSeparator('Instrumento') ] );
+        $this->form->addFields( [new TFormSeparator('Instrumentos') ] );
         $this->form->addFields( [$this->instrumento_list] );
+        $this->form->addFields( [$this->observacao_item] );
         
         $this->form->addAction( 'Salvar',  new TAction( [$this, 'onSave'] ),  'fa:save green' );
         $this->form->addAction( 'Limpar', new TAction( [$this, 'onClear'] ), 'fa:eraser red' );
@@ -152,8 +158,8 @@ class ReceberMaterialForm extends TPage
             
             $id = (int) $param['id'];
             $movimentacao = new Movimentacao($id);
-            $movimentacao->escaninho = $param['escaninho'];
             $movimentacao->aluno_id = $param['aluno_id'];
+            $movimentacao->escaninho = $param['escaninho'];
             $movimentacao->observacao = $param['observacao'];
             $movimentacao->funcionario_entrada_id = TSession::getValue('userid');
             $movimentacao->store();
