@@ -12,6 +12,8 @@ class ReceberMaterialForm extends TPage
 {
     protected $form; // form
     protected $instrumento_list;
+    protected $movimentacao_items;
+    protected $instrumento_id;
     
     /**
      * Class constructor
@@ -54,14 +56,15 @@ class ReceberMaterialForm extends TPage
         $label_escaninho->setFontColor('#FF0000');
         $label_aluno->setFontColor('#FF0000');
 
-        // create detail fields
+        // create detail fields Campo para seleção dos instrumentos
         $instrumento_id = new TDBUniqueSearch('instrumento_id[]', 'database', 'Instrumento', 'id', 'nome');
         $instrumento_id->setMinLength(0);
         $instrumento_id->setSize('100%');
-        $instrumento_id->setMask('({id}) {nome}');
+        $instrumento_id->setMask('{nome} ({id})');
         // $instrumento_id->setChangeAction(new TAction(array($this, 'onChangeProduct')));
-        
-        $observacao_item = new TEntry('observacao_item[]');
+    
+        //Criação do campo de observações
+        $observacao_item = new TEntry('observacao_item');
         $observacao_item->style = 'text-align: right';
 
         $this->form->addField($instrumento_id);
@@ -124,6 +127,7 @@ class ReceberMaterialForm extends TPage
                 }
                 
                 TTransaction::close(); // close transaction
+                new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'));
             }
         }
         catch (Exception $e) // in case of exception
@@ -162,7 +166,7 @@ class ReceberMaterialForm extends TPage
             $movimentacao->funcionario_entrada_id = TSession::getValue('userid');
             $movimentacao->store();
             
-            $movimentacao_items = ItemMovimentacao::where('instrumento_id', '=', $instrumento->id)->delete();
+            $movimentacao_items = ItemMovimentacao::where('movimentacao_id', '=', $movimentacao->id)->delete();
             
             if( !empty($param['instrumento_id']) AND is_array($param['instrumento_id']) )
             {
@@ -172,7 +176,8 @@ class ReceberMaterialForm extends TPage
                     {
                         $item = new ItemMovimentacao;
                         $item->instrumento_id  = $instrumento_id;
-
+                        $item->movimentacao_id = $movimentacao->id;
+                        $item->observacao = $param['observacao_item'];
                         $item->store();
                     }
                 }
@@ -182,7 +187,7 @@ class ReceberMaterialForm extends TPage
             $data->id = $movimentacao->id;
             TForm::sendData('form_ReceberMaterial', $data);
             TTransaction::close(); // close the transaction
-            new TMessage('info', TAdiantiCoreTranslator::translate('Salvo com sucesso'));
+            new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'));
         }
         catch (Exception $e) // in case of exception
         {
