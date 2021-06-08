@@ -20,9 +20,17 @@
   <menuitem label="Movimentação">
     <icon>fas:walking fa-fw</icon>
     <menu>
-      <menuitem label="Receber Material">
+      <menuitem label="Recebimento">
         <action>ReceberMaterialForm</action>
         <icon>fas:inbox fa-fw</icon>
+      </menuitem>
+      <menuitem label="Devolução">
+        <action>DevolucaoList</action>
+        <icon>fas:arrow-alt-circle-left fa-fw</icon>
+      </menuitem>
+      <menuitem label="Devolvidos">
+        <action>DevolvidosList</action>
+        <icon>fas:clipboard-list fa-fw</icon>
       </menuitem>
     </menu>
   </menuitem>

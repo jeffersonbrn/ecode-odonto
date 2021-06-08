@@ -24,5 +24,7 @@ class ItemMovimentacao extends TRecord
         parent::addAttribute('movimentacao_id');
         parent::addAttribute('instrumento_id');
         parent::addAttribute('observacao');
+        parent::addAttribute('datadevolucao');
+        parent::addAttribute('funcionario_devolucao_id');
     }
 }
